@@ -33,7 +33,7 @@ export default function NotesReview() {
         setIsPublishing(true);
         try {
           const secretKey = process.env.NEXT_PUBLIC_GRABIT_INTERNAL_API_KEY || 'grabit_secret_auth_2026';
-          const res = await fetch('http://localhost:4000/api/notes', {
+          const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/notes`, {
             method: 'POST',
             headers: { 
               'Content-Type': 'application/json',
@@ -60,7 +60,7 @@ export default function NotesReview() {
     setIsPublishing(true);
     try {
       const secretKey = process.env.NEXT_PUBLIC_GRABIT_INTERNAL_API_KEY || 'grabit_secret_auth_2026';
-      const res = await fetch('http://localhost:4000/api/publish', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/publish`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

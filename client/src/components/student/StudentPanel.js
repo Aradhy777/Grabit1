@@ -40,7 +40,7 @@ export default function StudentPanel() {
 
     try {
       const secretKey = process.env.NEXT_PUBLIC_GRABIT_INTERNAL_API_KEY || 'grabit_secret_auth_2026';
-      const res = await fetch('http://localhost:4000/api/chat', {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'}/api/chat`, {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
