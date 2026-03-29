@@ -1,0 +1,4 @@
+Convert this transcript into structured, bulleted academic notes. 
+Focus on key concepts, definitions, and examples mentioned during the lecture.
+Transcript: 
+{{transcript}}

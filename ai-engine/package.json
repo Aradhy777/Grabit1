@@ -1,0 +1,10 @@
+{
+  "name": "grabit-ai-engine",
+  "version": "1.0.0",
+  "main": "src/pipeline/processLecture.js",
+  "dependencies": {
+    "@deepgram/sdk": "^5.0.0",
+    "@google/generative-ai": "^0.1.3",
+    "groq-sdk": "^1.1.2"
+  }
+}
