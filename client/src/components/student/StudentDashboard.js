@@ -60,7 +60,7 @@ export default function StudentDashboard() {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex flex-col gap-10 pb-10">
+    <div className="relative min-h-screen flex flex-col gap-10 pb-10 bg-base">
       {/* Background Particles for Continuity (Subtle) */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
         {[...Array(3)].map((_, i) => (
@@ -89,13 +89,13 @@ export default function StudentDashboard() {
       <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
         {/* Search & Action Header (Full width within the grid) */}
         <div className="lg:col-span-3 flex items-center justify-between gap-6">
-          <div className="relative flex-1 max-w-2xl">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted" size={18} />
+          <div className="relative flex-1 max-w-2xl neu-pressed rounded-[25px] flex items-center">
+            <Search className="absolute left-6 text-text-muted transition-colors focus-within:text-accent-primary" size={20} />
             <Input 
               placeholder="Search lectures, subjects, or notes..." 
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-12 h-14 rounded-[25px] border-none bg-white shadow-sm focus-visible:ring-accent-primary transition-all"
+              className="pl-14 h-14 w-full rounded-[25px] border-none bg-transparent shadow-none focus-visible:ring-0 text-text-primary placeholder:text-text-muted/70 transition-all font-medium"
             />
           </div>
           <Button 
@@ -139,16 +139,22 @@ export default function StudentDashboard() {
             </div>
             <div className="flex flex-col gap-4">
               {isLoading && (
-                <div className="h-24 rounded-[35px] bg-black/5 animate-pulse" />
+                <div className="h-24 rounded-[35px] neu-pressed animate-pulse" />
               )}
               {!isLoading && lectures.length === 0 && (
-                <p className="text-center py-10 text-xs font-black uppercase text-text-muted opacity-40">No published lectures yet.</p>
+                <div className="relative flex items-center justify-center py-16">
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <div className="w-32 h-32 rounded-full neu-flat opacity-50 animate-pulse" />
+                    <div className="absolute w-48 h-48 rounded-full border border-white/50 opacity-20 animate-ping" />
+                  </div>
+                  <p className="text-center text-xs font-black uppercase tracking-widest text-text-muted opacity-60 relative z-10 neu-pressed px-8 py-3 rounded-full">No published lectures yet.</p>
+                </div>
               )}
               {lectures.map((lecture) => (
                 <Card 
                   key={lecture.id} 
                   onClick={() => router.push(`/student/notes/${lecture.id}`)}
-                  className="border border-transparent shadow-sm rounded-[35px] bg-white hover:shadow-xl hover:border-accent-primary/20 hover:-translate-y-1 transition-all cursor-pointer group overflow-hidden"
+                  className="border-none rounded-[35px] neu-flat hover:neu-flat-sm hover:-translate-y-1 transition-all duration-300 cursor-pointer group overflow-hidden"
                 >
                   <CardContent className="p-0 flex items-center h-24">
                     <div className="w-24 h-full bg-slate-50 flex items-center justify-center group-hover:bg-accent-primary/5 transition-colors">
@@ -192,11 +198,11 @@ export default function StudentDashboard() {
           {/* AI INSIGHTS / NOTIFICATIONS */}
           <section className="flex flex-col gap-4">
              <div className="flex items-center justify-between px-2">
-                <h3 className="text-xs font-black uppercase tracking-[0.2em] text-text-muted">AI Insights</h3>
-                <Bell size={16} className="text-accent-primary animate-bounce-slow" />
-             </div>
-             <Card className="border border-white/40 shadow-xl shadow-blue-500/5 rounded-[40px] bg-white/60 backdrop-blur-xl overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 transition-all">
-               <CardContent className="p-8 space-y-6">
+                 <h3 className="text-xs font-black uppercase tracking-[0.2em] text-text-muted drop-shadow-sm">AI Insights</h3>
+                 <Bell size={16} className="text-accent-primary animate-bounce-slow" />
+              </div>
+              <Card className="glass-panel rounded-[40px] overflow-hidden hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-500">
+                <CardContent className="p-8 space-y-6">
                  <div className="flex gap-4 items-start pb-6 border-b border-black/5 group cursor-pointer">
                    <div className="w-10 h-10 rounded-full bg-blue-100 text-accent-primary flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all shadow-sm">
                      <Sparkles size={18} />

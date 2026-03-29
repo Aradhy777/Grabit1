@@ -3,8 +3,8 @@
 @import "tailwindcss";
 
 @theme {
-  /* Minimal Swiss Redesign */
-  --color-base: #FFFFFF;
+  /* Minimal Swiss Redesign + Soft UI Effects */
+  --color-base: #F4F7FA;
   --color-surface: #FAFAFA;
   --color-border-subtle: #E2E8F0;
   --color-accent-primary: #D4AF37;
@@ -65,7 +65,39 @@
     background-color: #E2E8F0;
     border-radius: 9999px;
   }
+  
+  /* Neomorphism & Glassmorphism Pro Max */
+  .neu-flat {
+    background-color: var(--color-base);
+    box-shadow: 10px 10px 20px rgba(163, 177, 198, 0.4), -10px -10px 20px rgba(255, 255, 255, 0.9);
+  }
+
+  .neu-flat-sm {
+    background-color: var(--color-base);
+    box-shadow: 5px 5px 10px rgba(163, 177, 198, 0.35), -5px -5px 10px rgba(255, 255, 255, 0.9);
+  }
+
+  .neu-pressed {
+    background-color: var(--color-base);
+    box-shadow: inset 6px 6px 10px rgba(163, 177, 198, 0.4), inset -6px -6px 10px rgba(255, 255, 255, 0.9);
+  }
+
+  .glass-card {
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+  
+  .glass-panel {
+    background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255,255,255,0.8);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.05);
+  }
 }
+
 
 @keyframes typing-bounce {
   0%, 100% {
