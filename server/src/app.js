@@ -8,9 +8,7 @@ const app = express();
 
 // Security Middleware: Harden CORS
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? process.env.ALLOWED_ORIGIN 
-    : ['http://localhost:3000', 'http://127.0.0.1:3000'],
+  origin: '*',
   optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
