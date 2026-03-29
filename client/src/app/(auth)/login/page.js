@@ -98,7 +98,7 @@ export default function Login() {
             type="password"
             required
             placeholder="••••••••"
-            rightAction={<Link href="#">Reset?</Link>}
+            rightAction={<Link href="/forgot-password" className="text-accent-primary hover:opacity-70 transition-all">Reset?</Link>}
             onChange={(e) => setFormData({...formData, password: e.target.value})}
           />
 

@@ -3,7 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from pydantic import BaseModel
 import models, auth, database
-
+import secrets
+from datetime import datetime, timedelta
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup: connect to MongoDB
@@ -32,6 +33,14 @@ class UserCreate(BaseModel):
 class UserLogin(BaseModel):
     email: str
     password: str
+
+class PasswordResetRequest(BaseModel):
+    email: str
+
+class PasswordResetConfirm(BaseModel):
+    email: str
+    otp: str
+    new_password: str
 
 @app.post("/signup", status_code=status.HTTP_201_CREATED)
 async def signup(user: UserCreate):
@@ -73,6 +82,50 @@ async def login(user_credentials: UserLogin):
     return {"access_token": access_token, "token_type": "bearer"}
 
 # Protected Routes
+@app.post("/forgot-password")
+async def forgot_password(request: PasswordResetRequest):
+    db = database.get_db()
+    user = await db["users"].find_one({"email": request.email})
+    if not user:
+        raise HTTPException(status_code=404, detail="Email not found")
+        
+    otp = "".join([str(secrets.randbelow(10)) for _ in range(6)])
+    expiry = datetime.utcnow() + timedelta(minutes=15)
+    
+    await db["users"].update_one(
+        {"email": request.email}, 
+        {"$set": {"reset_otp": otp, "reset_otp_expiry": expiry}}
+    )
+    
+    # In a real app, send an email here. For dev, we return it.
+    return {"message": "Reset code generated", "dev_otp": otp}
+
+@app.post("/reset-password")
+async def reset_password(request: PasswordResetConfirm):
+    db = database.get_db()
+    user = await db["users"].find_one({"email": request.email})
+    
+    if not user:
+        raise HTTPException(status_code=404, detail="Email not found")
+        
+    if "reset_otp" not in user or user["reset_otp"] != request.otp:
+        raise HTTPException(status_code=400, detail="Invalid reset code")
+        
+    if datetime.utcnow() > user["reset_otp_expiry"]:
+        raise HTTPException(status_code=400, detail="Reset code has expired")
+        
+    hashed_pwd = auth.hash_password(request.new_password)
+    
+    await db["users"].update_one(
+        {"email": request.email},
+        {
+            "$set": {"password": hashed_pwd},
+            "$unset": {"reset_otp": "", "reset_otp_expiry": ""}
+        }
+    )
+    
+    return {"message": "Password updated successfully"}
+
 @app.get("/teacher/dashboard")
 def teacher_dashboard(current_user: dict = Depends(auth.check_role("teacher"))):
     return {
