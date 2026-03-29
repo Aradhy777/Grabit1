@@ -11,25 +11,28 @@ export function AuthInput({ label, icon: Icon, type = 'text', rightAction, ...pr
   const currentType = isPassword ? (showPassword ? 'text' : 'password') : type;
 
   return (
-    <motion.div variants={itemVariants} className="space-y-2">
-      <div className="flex items-center justify-between px-2">
-        <label className="text-[10px] font-black uppercase tracking-[0.2em] text-text-muted">{label}</label>
+    <motion.div variants={itemVariants} className="space-y-2 relative">
+      <div className="flex items-center justify-between">
+        <label className="text-xs font-semibold text-text-primary tracking-wide">
+          {label}
+        </label>
         {rightAction && (
-          <div className="text-[10px] font-black uppercase tracking-widest text-accent-primary hover:opacity-70 transition-opacity">
+          <div className="text-[11px] font-bold uppercase tracking-widest text-text-muted hover:text-text-primary transition-colors">
             {rightAction}
           </div>
         )}
       </div>
+      
       <div className="group relative">
         {Icon && (
-          <div className="absolute left-5 top-1/2 -translate-y-1/2 text-text-muted transition-colors group-focus-within:text-accent-primary pointer-events-none">
-            <Icon size={18} />
+          <div className="absolute left-4 top-1/2 -translate-y-1/2 text-border-subtle transition-colors group-focus-within:text-text-primary pointer-events-none">
+            <Icon size={18} strokeWidth={2.5} />
           </div>
         )}
         
         {type === 'select' ? (
            <select
-             className={`w-full rounded-2xl border border-white/20 bg-white/30 py-4 ${Icon ? 'pl-14' : 'pl-5'} pr-5 font-medium text-text-primary outline-none transition-all hover:bg-white/50 focus:border-accent-primary/40 focus:bg-white/60 focus:ring-4 focus:ring-accent-primary/5 appearance-none cursor-pointer`}
+             className={`w-full rounded-lg border-2 border-border-subtle bg-white py-3.5 ${Icon ? 'pl-11' : 'pl-4'} pr-4 font-semibold text-text-primary outline-none transition-all hover:border-text-muted focus:border-text-primary focus:ring-4 focus:ring-text-primary/10 appearance-none cursor-pointer`}
              {...props}
            >
              {props.children}
@@ -37,7 +40,7 @@ export function AuthInput({ label, icon: Icon, type = 'text', rightAction, ...pr
         ) : (
           <input 
             type={currentType} 
-            className={`w-full rounded-2xl border border-white/20 bg-white/30 py-4 ${Icon ? 'pl-14' : 'pl-5'} ${isPassword ? 'pr-14' : 'pr-4'} font-medium text-text-primary placeholder:text-text-muted/60 outline-none transition-all hover:bg-white/50 focus:border-accent-primary/40 focus:bg-white/60 focus:ring-4 focus:ring-accent-primary/5`}
+            className={`w-full rounded-lg border-2 border-border-subtle bg-white py-3.5 ${Icon ? 'pl-11' : 'pl-4'} ${isPassword ? 'pr-12' : 'pr-4'} font-semibold text-text-primary placeholder:font-medium placeholder:text-border-subtle outline-none transition-all hover:border-text-muted focus:border-text-primary focus:ring-4 focus:ring-text-primary/10`}
             {...props}
           />
         )}
@@ -46,10 +49,10 @@ export function AuthInput({ label, icon: Icon, type = 'text', rightAction, ...pr
           <button 
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-5 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-text-muted transition-colors hover:text-text-primary"
             title={showPassword ? "Hide password" : "Show password"}
           >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+            {showPassword ? <EyeOff size={18} strokeWidth={2.5} /> : <Eye size={18} strokeWidth={2.5} />}
           </button>
         )}
       </div>
